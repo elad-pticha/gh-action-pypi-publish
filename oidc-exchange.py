@@ -104,7 +104,7 @@ def die(msg: str) -> NoReturn:
 
 
 def debug(msg: str):
-    print(f"::debug::{msg}", file=sys.stderr)
+    print(f"::notice::{msg}", file=sys.stderr)
 
 
 def get_normalized_input(name: str) -> str | None:
@@ -163,7 +163,7 @@ def render_claims(token: str) -> str:
 
 
 repository_url = get_normalized_input("repository-url")
-die(f"========== this is repository_url {repository_url} =========")
+debug(f"========== this is repository_url {repository_url} =========")
 
 repository_domain = urlparse(repository_url).netloc
 debug(f"========== this is repository_domain {repository_domain} =========")
