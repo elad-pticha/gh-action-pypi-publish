@@ -202,7 +202,7 @@ mint_token_resp = requests.post(
     token_exchange_url,
     json={"token": oidc_token},
 )
-debug(f"========== this is mint_token_resp {mint_token_resp} =========")
+debug(f"========== this is mint_token_resp {mint_token_resp.json()} =========")
 
 try:
     mint_token_payload = mint_token_resp.json()
