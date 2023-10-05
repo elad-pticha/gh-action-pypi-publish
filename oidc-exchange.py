@@ -161,24 +161,32 @@ def render_claims(token: str) -> str:
         ref=_get("ref"),
     )
 
-
+# output: https://upload.pypi.org/legacy/
 repository_url = get_normalized_input("repository-url")
 debug(f"========== this is repository_url {repository_url} =========")
 
+
+# upload.pypi.org
 repository_domain = urlparse(repository_url).netloc
 debug(f"========== this is repository_domain {repository_domain} =========")
 
+# https://upload.pypi.org/_/oidc/github/mint-token
 token_exchange_url = f"https://{repository_domain}/_/oidc/github/mint-token"
 debug(f"========== this is token_exchange_url {token_exchange_url} =========")
 
 # Indices are expected to support `https://{domain}/_/oidc/audience`,
 # which tells OIDC exchange clients which audience to use.
+# https://upload.pypi.org/_/oidc/audience
 audience_url = f"https://{repository_domain}/_/oidc/audience"
 debug(f"========== this is audience_url {audience_url} =========")
 
+# https://upload.pypi.org/_/oidc/audience
+# returns { "audience" : "pypi" }
 audience_resp = requests.get(audience_url)
 assert_successful_audience_call(audience_resp, repository_domain)
 
+
+# pypi
 oidc_audience = audience_resp.json()["audience"]
 
 debug(f"selected trusted publishing exchange endpoint: {token_exchange_url}")
@@ -188,6 +196,10 @@ try:
 except id.IdentityError as identity_error:
     die(_TOKEN_RETRIEVAL_FAILED_MESSAGE.format(identity_error=identity_error))
 
+
+debug(f"========== this is oidc_token {oidc_token} =========")
+debug(f"========== this is id module {id} =========")
+debug(f"========== this is id id.detect_credential {id.detect_credential} =========")
 # Now we can do the actual token exchange.
 mint_token_resp = requests.post(
     token_exchange_url,
