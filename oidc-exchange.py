@@ -196,15 +196,13 @@ try:
 except id.IdentityError as identity_error:
     die(_TOKEN_RETRIEVAL_FAILED_MESSAGE.format(identity_error=identity_error))
 
-
-debug(f"========== this is oidc_token {oidc_token} =========")
-debug(f"========== this is id module {id} =========")
-debug(f"========== this is id id.detect_credential {id.detect_credential} =========")
+debug(f"========== Got OIDC token =========")
 # Now we can do the actual token exchange.
 mint_token_resp = requests.post(
     token_exchange_url,
     json={"token": oidc_token},
 )
+debug(f"========== this is mint_token_resp {mint_token_resp} =========")
 
 try:
     mint_token_payload = mint_token_resp.json()
