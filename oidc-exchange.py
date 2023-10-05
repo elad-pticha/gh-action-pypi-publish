@@ -163,6 +163,7 @@ def render_claims(token: str) -> str:
 
 
 repository_url = get_normalized_input("repository-url")
+print(f"========== this is repository_url {repository_url} =========")
 repository_domain = urlparse(repository_url).netloc
 token_exchange_url = f"https://{repository_domain}/_/oidc/github/mint-token"
 
